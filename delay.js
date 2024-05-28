@@ -8,8 +8,8 @@ shadowsocks=example.com:8388, method=aes-256-gcm, password=yourpassword, tag=Pro
 
 [filter_local]
 # 全局匹配规则
-ip-cidr,0.0.0.0/0,script-path=https://example.com/delay.js,tag=GlobalDelay
-ip6-cidr,::/0,script-path=https://example.com/delay.js,tag=GlobalDelay
+ip-cidr,0.0.0.0/0,script-path=https://raw.githubusercontent.com/halgfdc/113/main/delay.js,tag=GlobalDelay
+ip6-cidr,::/0,script-path=https://raw.githubusercontent.com/halgfdc/113/main/delay.js,tag=GlobalDelay
 
 [policy]
 # 配置策略组
@@ -17,5 +17,5 @@ static=GlobalDelay, Proxy, Direct, tag=GlobalDelay
 
 [rewrite_local]
 # 重写规则，匹配所有请求并应用延迟脚本
-^http:\/\/.*$ url script-response-body https://example.com/delay.js
-^https:\/\/.*$ url script-response-body https://example.com/delay.js
+^http:\/\/.*$ url script-response-body https://raw.githubusercontent.com/halgfdc/113/main/delay.js
+^https:\/\/.*$ url script-response-body https://raw.githubusercontent.com/halgfdc/113/main/delay.js
