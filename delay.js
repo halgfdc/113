@@ -1,11 +1,24 @@
-// delay.js
-const delay = 99999; // 延迟时间（毫秒）
+// delay_simulation.js
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function delayResponse(request) {
+    // Introduce a delay of 99999 milliseconds (almost 100 seconds)
+    let delay = 99999; // Milliseconds
+
+    // Wrap the original response with a delay
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(request.response);
+        }, delay);
+    });
 }
 
-(async () => {
-    await sleep(delay);
-    $done({});
-})();
+function onRequest(request) {
+    if (request.protocol === 'udp') {
+        return delayResponse(request);
+    }
+    return request.response;
+}
+
+module.exports = {
+    onRequest
+};
