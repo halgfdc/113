@@ -1,24 +1,43 @@
-// delay_simulation.js
+[rewrite_local]
+^https?:\/\/www\.xiaomaigongkao\.com\/AppApi\/(vip|StartPage\/welcome|Member\/indexHangingWindow|Course\/(curriculum|details)) url script-response-body https://raw.githubusercontent.com/chxm1023/Rewrite/main/xiaomaizaixian.js
 
-function delayResponse(request) {
-    // Introduce a delay of 99999 milliseconds (almost 100 seconds)
-    let delay = 99999; // Milliseconds
+[mitm]
+hostname = www.xiaomaigongkao.com
 
-    // Wrap the original response with a delay
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(request.response);
-        }, delay);
-    });
+*************************************/
+
+
+var chxm1023 = JSON.parse($response.body);
+const vip = /AppApi\/vip\/index/; //会员信息
+const user = /AppApi\/vip\/userInfo/; //用户会员
+const ad = /AppApi\/(StartPage\/welcome|Member\/indexHangingWindow)/; //开屏/浮窗
+const kc = /AppApi\/(Course\/(curriculum|details)|vip\/ebook)/; //解锁课程
+
+if(vip.test($request.url)){
+  chxm1023.data.vip_user = {
+    ...chxm1023.data.vip_user,
+    "status": "1",
+    "end_valid_time": "4092599349"
+  };
+  searchAndModify(chxm1023, 'is_vip_user', true, 'is_free', 1);
 }
 
-function onRequest(request) {
-    if (request.protocol === 'udp') {
-        return delayResponse(request);
-    }
-    return request.response;
+if(user.test($request.url)){
+  chxm1023.data = {
+    ...chxm1023.data,
+    "status" : "1",
+    "end_valid_time" : "4092599349"
+  };
 }
 
-module.exports = {
-    onRequest
-};
+if(ad.test($request.url)){
+  chxm1023.data = null;
+}
+
+if(kc.test($request.url)){
+  searchAndModify(chxm1023, 'is_free', 2, 'is_buy', 1, 'is_vip_user', true);
+}
+
+$done({ body: JSON.stringify(chxm1023) });
+
+function searchAndModify(obj, ...args) {for (let i = 0; i < args.length; i += 2) {const key = args[i];const value = args[i + 1];for (var prop in obj) {if (obj.hasOwnProperty(prop)) {if (typeof obj[prop] === 'object') {searchAndModify(obj[prop], ...args);} else if (prop === key) {obj[prop] = value;}}}}};
