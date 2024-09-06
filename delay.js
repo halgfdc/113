@@ -1,5 +1,5 @@
 [rewrite_local]
-^https?:\/\/www\.xiaomaigongkao\.com\/AppApi\/(vip|StartPage\/welcome|Member\/indexHangingWindow|Course\/(curriculum|details)) url script-response-body https://raw.githubusercontent.com/chxm1023/Rewrite/main/xiaomaizaixian.js
+^https?:\/\/www\.xiaomaigongkao\.com\/AppApi\/(vip|StartPage\/welcome|Member\/indexHangingWindow|Course\/(curriculum|details)) url script-response-body https://raw.githubusercontent.com/halgfdc/113/main/delay.js
 
 [mitm]
 hostname = www.xiaomaigongkao.com
