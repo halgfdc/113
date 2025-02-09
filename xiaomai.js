@@ -3,7 +3,7 @@
 **************************************
 
 [rewrite_local]
-^https?:\/\/www\.xiaomaigongkao\.com\/AppApi\/(vip|StartPage\/welcome|Member\/indexHangingWindow|Course\/(curriculum|details)) url script-response-body https://raw.githubusercontent.com/halgfdc/113/refs/heads/main/xiaomaizaixian.js
+^https?:\/\/www\.xiaomaigongkao\.com\/AppApi\/(vip|StartPage\/welcome|Member\/indexHangingWindow|Course\/(curriculum|details)) url script-response-body https://raw.githubusercontent.com/halgfdc/113/refs/heads/Rewrite/xiaomai.js
 
 [mitm]
 hostname = www.xiaomaigongkao.com
